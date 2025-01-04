@@ -18,7 +18,14 @@ func (h *Handler) AddLanguage(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&reqbody); err != nil {
 
 	}
-	validate.Struct(reqbody)
+	if err := validate.Struct(reqbody); err != nil {
+		errors := err.(validator.ValidationErrors)
+		writeJSON(w, map[string]string{
+			"message": "Data validation error",
+			"error":   errors.Error(),
+		}, http.StatusBadRequest)
+		return
+	}
 	if err := h.rp.AddLanguage(reqbody); err != nil {
 		writeJSON(w, map[string]string{
 			"message": "Failed to add new language",

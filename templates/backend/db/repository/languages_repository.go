@@ -10,11 +10,8 @@ type LanguageRepository interface {
 // var _ LanguageRepository = (*PostgreService)(nil)
 
 func (p *PostgreService) AddLanguage(lang *model.Language) error {
-	res, err := p.DB.Exec(`INSERT INTO "language"(name, release_year) VALUES($1, $2)`, lang.Name, lang.ReleaseYear)
-	if err != nil {
-		return err
-	}
-	langId, err := res.LastInsertId()
+	var langId int
+	err := p.DB.QueryRow(`INSERT INTO "language"(name, release_year) VALUES($1, $2) RETURNING id`, lang.Name, lang.ReleaseYear).Scan(&langId)
 	if err != nil {
 		return err
 	}
