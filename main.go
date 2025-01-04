@@ -53,5 +53,5 @@ func main() {
 	}
 
 	fmt.Printf("Project was created successfully! 🎉\nJust one more thing!\nRun:\n    $ cd %s\n    $ npm install\n"+
-		"Initialize a go module if haven't done it before:\n	go mod init github.com/githubacc/my-fullstack-app", frontendName)
+		"Initialize a go module if you haven't done it before:\n	go mod init github.com/githubacc/my-fullstack-app\n    go mod tidy", frontendName)
 }

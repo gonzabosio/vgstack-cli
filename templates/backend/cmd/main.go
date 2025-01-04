@@ -8,7 +8,9 @@ import (
 )
 
 func main() {
-	if err := godotenv.Load("./backend/.env"); err != nil {
+	// UNCOMMENT .ENV FROM THE GITIGNORE FILE
+
+	if err := godotenv.Load("backend/.env"); err != nil {
 		log.Fatalf("environment variables loading error: %v", err)
 	}
 	if err := backend.StartBackendServer(); err != nil {
