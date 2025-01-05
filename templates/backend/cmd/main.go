@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	backend "vgstack-cli/templates/backend/api"
+
+	backend "github.com/gonzabosio/vgstack-cli/templates/backend/api"
 
 	"github.com/joho/godotenv"
 )

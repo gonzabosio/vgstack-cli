@@ -1,6 +1,6 @@
 package repository
 
-import "vgstack-cli/templates/backend/db/model"
+import "github.com/gonzabosio/vgstack-cli/templates/backend/db/model"
 
 type LanguageRepository interface {
 	AddLanguage(lang *model.Language) error

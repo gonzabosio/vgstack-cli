@@ -3,7 +3,8 @@ package api
 import (
 	"net/http"
 	"os"
-	"vgstack-cli/templates/backend/api/handlers"
+
+	"github.com/gonzabosio/vgstack-cli/templates/backend/api/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

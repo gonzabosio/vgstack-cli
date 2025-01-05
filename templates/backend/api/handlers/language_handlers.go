@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"vgstack-cli/templates/backend/db/model"
+
+	"github.com/gonzabosio/vgstack-cli/templates/backend/db/model"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"

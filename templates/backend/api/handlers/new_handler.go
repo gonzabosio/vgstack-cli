@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"vgstack-cli/templates/backend/db"
-	"vgstack-cli/templates/backend/db/repository"
+	"github.com/gonzabosio/vgstack-cli/templates/backend/db"
+	"github.com/gonzabosio/vgstack-cli/templates/backend/db/repository"
 )
 
 type Handler struct {
