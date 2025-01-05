@@ -1,0 +1,18 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: dockeraccount/vgstack-backend:v1
+    env_file: ./backend/.env
+    ports:
+      - "8080:8080"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: dockeraccount/vgstack-frontend:v1
+    env_file:
+      - ./frontend/.env
+    ports:
+      - "5173:5173"

@@ -1,20 +1,12 @@
 package api
 
-import (
-	"net/http"
-	"os"
+import "github.com/go-chi/chi/v5"
 
-	"github.com/go-chi/chi/v5"
-)
-
-func StartBackendServer() error {
-	r := chi.NewRouter()
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello"))
-	})
-
-	if err := http.ListenAndServe(":"+os.Getenv("BACKEND_PORT"), r); err != nil {
-		return err
+func SetupBackendServer() (*chi.Mux, error) {
+	r, err := newRouter()
+	if err != nil {
+		return nil, err
 	}
-	return nil
+
+	return r, nil
 }

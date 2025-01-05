@@ -1,0 +1,21 @@
+# binaries
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.o
+
+# go-specific files
+bin/
+*.out
+*.test
+
+.vscode/
+
+.git/
+.gitignore
+
+Dockerfile
+.dockerignore
+.env
