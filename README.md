@@ -5,6 +5,7 @@ Implementations:
 - PostgreSQL
 - Vue Router
 - Chi
+- Docker
 
 ### Run default command
 ```
@@ -13,5 +14,9 @@ go run github.com/gonzalobosio/vgstack-cli@latest
 ### Options
 #### Folder names (frontend, backend)
 ```
-go run github.com/gonzalobosio/vgstack-cli@latest -f front -b back
+go run github.com/gonzalobosio/vgstack-cli@latest -f 'front' -b 'back'
+```
+#### To ignore dockerfiles
+```
+go run github.com/gonzalobosio/vgstack-cli@latest -nodocker
 ```

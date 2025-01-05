@@ -7,3 +7,4 @@ Initialize a go module if you haven't done it before:
 $ cd backend
 $ go mod init github.com/yourgithubacc/my-repository-name  
 $ go mod tidy
+Replace vgstack-cli/templates/backend package imports with the module you created
