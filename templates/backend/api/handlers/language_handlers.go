@@ -21,15 +21,15 @@ func (h *Handler) AddLanguage(w http.ResponseWriter, r *http.Request) {
 	if err := validate.Struct(reqbody); err != nil {
 		errors := err.(validator.ValidationErrors)
 		writeJSON(w, map[string]string{
-			"message": "Data validation error",
-			"error":   errors.Error(),
+			"message":    "Data validation error",
+			"error_dets": errors.Error(),
 		}, http.StatusBadRequest)
 		return
 	}
 	if err := h.rp.AddLanguage(reqbody); err != nil {
 		writeJSON(w, map[string]string{
-			"message": "Failed to add new language",
-			"error":   err.Error(),
+			"message":    "Failed to add new language",
+			"error_dets": err.Error(),
 		}, http.StatusInternalServerError)
 		return
 	}
@@ -39,27 +39,42 @@ func (h *Handler) AddLanguage(w http.ResponseWriter, r *http.Request) {
 	}, http.StatusCreated)
 }
 
+func (h *Handler) GetLanguages(w http.ResponseWriter, r *http.Request) {
+	langs, err := h.rp.ReadLanguages()
+	if err != nil {
+		writeJSON(w, map[string]string{
+			"message":    fmt.Sprintf("Failed to read languages"),
+			"error_dets": err.Error(),
+		}, http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, map[string]interface{}{
+		"message":   "Languages retrieved",
+		"languages": langs,
+	}, http.StatusOK)
+}
+
 func (h *Handler) DeleteLanguage(w http.ResponseWriter, r *http.Request) {
 	langIdStr := chi.URLParam(r, "lang_id")
 	if langIdStr == "" {
 		writeJSON(w, map[string]string{
-			"message": "Not language id provided",
-			"error":   "lang_id query is empty or invalid",
+			"message":    "Not language id provided",
+			"error_dets": "lang_id query is empty or invalid",
 		}, http.StatusBadRequest)
 		return
 	}
 	langId, err := strconv.ParseInt(langIdStr, 10, 64)
 	if err != nil {
 		writeJSON(w, map[string]string{
-			"message": "Failed to parse language id",
-			"error":   err.Error(),
+			"message":    "Failed to parse language id",
+			"error_dets": err.Error(),
 		}, http.StatusInternalServerError)
 		return
 	}
 	if err := h.rp.DeleteLanguage(int(langId)); err != nil {
 		writeJSON(w, map[string]string{
-			"message": fmt.Sprintf("Failed to delete language %d", langId),
-			"error":   err.Error(),
+			"message":    fmt.Sprintf("Failed to delete language %d", langId),
+			"error_dets": err.Error(),
 		}, http.StatusInternalServerError)
 		return
 	}

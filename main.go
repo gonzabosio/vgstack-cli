@@ -26,7 +26,8 @@ func main() {
 			log.Fatalf("failed to copy backend files: %v", err)
 		}
 	} else {
-		if err := copyDir(backendSrc, "./backend"); err != nil {
+		backendName = "backend"
+		if err := copyDir(backendSrc, "./"+backendName); err != nil {
 			log.Fatalf("failed to copy backend files: %v", err)
 		}
 	}
@@ -35,7 +36,8 @@ func main() {
 			log.Fatalf("failed to copy frontend files: %v", err)
 		}
 	} else {
-		if err := copyDir(frontendSrc, "./frontend"); err != nil {
+		frontendName = "frontend"
+		if err := copyDir(frontendSrc, "./"+frontendName); err != nil {
 			log.Fatalf("failed to copy frontend files: %v", err)
 		}
 	}
@@ -52,6 +54,5 @@ func main() {
 		log.Fatalf("failed to copy makefile")
 	}
 
-	fmt.Printf("Project was created successfully! 🎉\nJust one more thing!\nRun:\n    $ cd %s\n    $ npm install\n"+
-		"Initialize a go module if you haven't done it before:\n    go mod init github.com/githubacc/my-fullstack-app\n    go mod tidy", frontendName)
+	fmt.Printf("Project was created successfully! 🎉\nJust one more thing!\nGo to the 'README.md' file and use the commands specified")
 }
