@@ -9,14 +9,14 @@ Implementations:
 
 ### Run default command
 ```
-go run github.com/gonzalobosio/vgstack-cli@latest
+go run github.com/gonzabosio/vgstack-cli@latest
 ```
 ### Options
 #### Folder names (frontend, backend)
 ```
-go run github.com/gonzalobosio/vgstack-cli@latest -f 'front' -b 'back'
+go run github.com/gonzabosio/vgstack-cli@latest -f 'front' -b 'back'
 ```
 #### To ignore dockerfiles
 ```
-go run github.com/gonzalobosio/vgstack-cli@latest -nodocker
+go run github.com/gonzabosio/vgstack-cli@latest -nodocker
 ```
