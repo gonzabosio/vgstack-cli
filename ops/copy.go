@@ -31,7 +31,6 @@ func CopyFile(src *zip.File, dst string) error {
 
 func ShouldIgnore(filename string, ignoreFiles []string) bool {
 	for _, f := range ignoreFiles {
-		fmt.Println("to ignore:", f, "have:", filename, "so:", f == filename)
 		if filename == f {
 			return true
 		}
