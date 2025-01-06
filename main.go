@@ -3,72 +3,45 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
-	"log"
 	"os"
+	"sync"
+
+	"github.com/gonzabosio/vgstack-cli/zip"
 )
 
 const (
+	tempRepoUrl = "https://github.com/gonzabosio/vgstack-temp/archive/refs/heads/master.zip"
+	zipFilePath = "temp.zip"
+	tempDstDir  = "./"
 	backendSrc  = "./templates/backend"
 	frontendSrc = "./templates/frontend"
-	makefileSrc = "./templates/Makefile"
-	composeSrc  = "./templates/docker-compose.yml"
 )
 
 func main() {
-	frontendName := ""
-	backendName := ""
-	flag.StringVar(&backendName, "b", "", "Type the name of your backend folder. e.g: -b 'back'")
-	flag.StringVar(&frontendName, "f", "", "Type the name for your frontend foldedr. e.g: -f 'front'")
-	noDocker := flag.Bool("nodocker", false, "Use nodocker if you want to disable docker files generation")
+	noDocker := flag.Bool("nodocker", false, "Use -nodocker if you want to disable docker files generation")
 	flag.Parse()
 
-	if backendName != "" {
-		if err := copyDir(backendSrc, "./"+backendName, *noDocker); err != nil {
-			log.Fatalf("failed to copy backend files: %v", err)
-		}
-	} else {
-		backendName = "backend"
-		if err := copyDir(backendSrc, "./"+backendName, *noDocker); err != nil {
-			log.Fatalf("failed to copy backend files: %v", err)
-		}
-	}
-	if frontendName != "" {
-		if err := copyDir(frontendSrc, "./"+frontendName, *noDocker); err != nil {
-			log.Fatalf("failed to copy frontend files: %v", err)
-		}
-	} else {
-		frontendName = "frontend"
-		if err := copyDir(frontendSrc, "./"+frontendName, *noDocker); err != nil {
-			log.Fatalf("failed to copy frontend files: %v", err)
-		}
-	}
-	if !*noDocker {
-		src, err := os.Open(composeSrc)
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		err := zip.Download(tempRepoUrl, zipFilePath)
 		if err != nil {
-			log.Fatalf("failed to open the source docker-compose")
+			fmt.Println("Error downloading zip file:", err)
+			return
 		}
-		dst, err := os.Create("./docker-compose.yml")
-		if err != nil {
-			log.Fatalf("failed to create docker-compose file")
-		}
-		_, err = io.Copy(dst, src)
-		if err != nil {
-			log.Fatalf("failed to copy docker-compose file")
-		}
-	}
 
-	src, err := os.Open(makefileSrc)
-	if err != nil {
-		log.Fatalf("failed to open the source makefile")
-	}
-	dst, err := os.Create("./Makefile")
-	if err != nil {
-		log.Fatalf("failed to create makefile")
-	}
-	_, err = io.Copy(dst, src)
-	if err != nil {
-		log.Fatalf("failed to copy makefile")
+		err = zip.ExtractTemplateFolder(zipFilePath, tempDstDir, *noDocker)
+		if err != nil {
+			fmt.Println("Error extracting templates:", err)
+			return
+		}
+	}()
+	wg.Wait()
+
+	if err := os.Remove("temp.zip"); err != nil {
+		fmt.Println("Error removing template zip file: ", err)
+		return
 	}
 
 	fmt.Printf("Project was created successfully! 🎉\nJust one more thing!\nGo to the 'README.md' file and use the commands specified")

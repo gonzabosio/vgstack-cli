@@ -1,22 +1,17 @@
-# vgstack
-CLI App to bootstrap a fullstack web application project with Go and Vue (based on Vite scaffolding)
+Run the following commands to setup your project correctly (change default folder names if needed):
 
-Implementations:
-- PostgreSQL
-- Vue Router
-- Chi
-- Docker
+$ cd frontend
 
-### Run default command
-```
-go run github.com/gonzabosio/vgstack-cli@latest
-```
-### Options
-#### Folder names (frontend, backend)
-```
-go run github.com/gonzabosio/vgstack-cli@latest -f 'front' -b 'back'
-```
-#### To ignore dockerfiles
-```
-go run github.com/gonzabosio/vgstack-cli@latest -nodocker
-```
+$ npm install
+
+$ npm install vue-router
+
+Initialize a go module if you haven't done it before:
+
+$ cd backend
+
+$ go mod init github.com/yourgithubacc/my-repository-name  
+
+$ go mod tidy
+
+Replace vgstack-cli/templates/backend package imports with the module you created
