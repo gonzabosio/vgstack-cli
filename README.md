@@ -1,5 +1,5 @@
 # vgstack-cli
-CLI App to bootstrap a fullstack web application project with Go and Vue (based on Vite scaffolding)
+CLI App to scaffold a fullstack web application project with Go and Vue (based on Vite scaffolding)
 
 Implementations:
 
@@ -9,6 +9,7 @@ Implementations:
 - Docker
 
 ### Run default command
+Use explicit version(@v1.x.x) for security
 ```
 go run github.com/gonzalobosio/vgstack-cli@latest
 ```
